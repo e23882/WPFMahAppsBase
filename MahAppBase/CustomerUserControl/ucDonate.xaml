@@ -6,8 +6,8 @@
                       xmlns:controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
                       xmlns:local="clr-namespace:MahAppBase.CustomerUserControl"
                       mc:Ignorable="d"
-                      Title="ucDonate" Height="450" Width="800">
+                      Title="Donate" Height="400" Width="400" Closed="UcDonate_OnClosed">
     <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
-        <Image Source="pack://application:,,,/Image/Donate.jpg"/>
+        <Image Source="pack://application:,,,/Image/Donate.jpg" Width="400"/>
     </StackPanel>
 </controls:MetroWindow>

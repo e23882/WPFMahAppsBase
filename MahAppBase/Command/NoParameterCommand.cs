@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
-namespace ScanDevice.Command
+namespace MahAppBase.Command
 {
     /// <summary>
     /// 無參數共用Command

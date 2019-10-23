@@ -20,9 +20,18 @@ namespace MahAppBase.CustomerUserControl
     /// </summary>
     public partial class ucDonate : MetroWindow
     {
+        #region Property
+        #endregion
+
+        #region Memberfunction
         public ucDonate()
         {
             InitializeComponent();
+        }
+        #endregion
+
+        private void UcDonate_OnClosed(object sender, EventArgs e)
+        {
         }
     }
 }
