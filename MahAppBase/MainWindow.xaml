@@ -12,9 +12,24 @@
     Width="800"
     Height="450"
     mc:Ignorable="d">
+    <controls:MetroWindow.Flyouts>
+        <controls:FlyoutsControl>
+            <controls:Flyout
+                x:Name="flyDonate"
+                Width="400"
+                Header="Donate"
+                IsOpen="{Binding DonateIsOpen}"
+                Position="Left"
+                Theme="Light">
+                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <Image Width="400" Source="pack://application:,,,/Image/Donate.jpg" />
+                </StackPanel>
+            </controls:Flyout>
+        </controls:FlyoutsControl>
+    </controls:MetroWindow.Flyouts>
     <controls:MetroWindow.RightWindowCommands>
         <controls:WindowCommands>
-            <Button Command="{Binding ButtonDonateClick}">
+            <Button Command="{Binding ButtonDonateClickCommand}">
                 <StackPanel Orientation="Horizontal">
                     <iconPacks:PackIconModern
                         Width="24"

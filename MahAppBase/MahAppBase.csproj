@@ -73,18 +73,11 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Command\RelayCommand.cs" />
-    <Compile Include="CustomerUserControl\ucDonate.xaml.cs">
-      <DependentUpon>ucDonate.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Enum\LogType.cs" />
     <Compile Include="Utility\Common.cs" />
     <Compile Include="ViewModel\MainComponent.cs" />
     <Compile Include="ViewModel\Status.cs" />
     <Compile Include="ViewModel\ViewModelBase.cs" />
-    <Page Include="CustomerUserControl\ucDonate.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
