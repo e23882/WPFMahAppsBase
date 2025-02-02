@@ -23,6 +23,8 @@ namespace MahAppBase
         {
             InitializeComponent();
             this.DataContext = ViewModel;
+            element.ToggleAutoHide();
+            element1.ToggleAutoHide();
         }
         #endregion
     }

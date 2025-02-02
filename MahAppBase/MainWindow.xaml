@@ -2,6 +2,7 @@
     x:Class="MahAppBase.MainWindow"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:avalondock="http://schemas.xceed.com/wpf/xaml/avalondock"
     xmlns:controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
@@ -44,15 +45,52 @@
             <Button Content="Settings" />
         </controls:WindowCommands>
     </controls:MetroWindow.RightWindowCommands>
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="*" />
-            <RowDefinition Height="30" />
-        </Grid.RowDefinitions>
-        <controls:MetroAnimatedTabControl Grid.Row="0">
-            <controls:MetroTabItem Header="TabItem1" />
-            <controls:MetroTabItem Header="TabItem2" />
-            <controls:MetroTabItem Header="TabItem3" />
-        </controls:MetroAnimatedTabControl>
-    </Grid>
+    <avalondock:DockingManager x:Name="mtTab" Grid.Row="0">
+        <avalondock:DockingManager.Theme>
+            <avalondock:MetroTheme />
+        </avalondock:DockingManager.Theme>
+        <avalondock:LayoutRoot>
+            <avalondock:LayoutPanel DockHeight="150">
+                <avalondock:LayoutAnchorablePane>
+                    <avalondock:LayoutAnchorable
+                        Title="功能"
+                        AutoHideWidth="240"
+                        CanAutoHide="False"
+                        CanClose="False"
+                        CanFloat="True"
+                        CanHide="False"
+                        ContentId="properties" />
+                </avalondock:LayoutAnchorablePane>
+            </avalondock:LayoutPanel>
+            <avalondock:LayoutRoot.BottomSide>
+                <avalondock:LayoutAnchorSide>
+                    <avalondock:LayoutAnchorGroup>
+                        <avalondock:LayoutAnchorable
+                            x:Name="element"
+                            Title="資料"
+                            AutoHideWidth="240"
+                            CanAutoHide="False"
+                            CanClose="False"
+                            CanFloat="True"
+                            CanHide="False"
+                            IsSelected="True">
+                            <DataGrid ItemsSource="{Binding SampleData}" />
+                        </avalondock:LayoutAnchorable>
+                        <avalondock:LayoutAnchorable
+                            x:Name="element1"
+                            Title="資料"
+                            AutoHideWidth="240"
+                            CanAutoHide="False"
+                            CanClose="False"
+                            CanFloat="True"
+                            CanHide="False"
+                            IsSelected="True">
+                            <DataGrid ItemsSource="{Binding SampleData}" />
+                        </avalondock:LayoutAnchorable>
+                    </avalondock:LayoutAnchorGroup>
+                </avalondock:LayoutAnchorSide>
+            </avalondock:LayoutRoot.BottomSide>
+        </avalondock:LayoutRoot>
+    </avalondock:DockingManager>
+
 </controls:MetroWindow>
