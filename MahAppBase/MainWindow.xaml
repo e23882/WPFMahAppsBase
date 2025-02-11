@@ -10,14 +10,13 @@
     xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
     xmlns:local="clr-namespace:MahAppBase"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:viewModel="clr-namespace:MahAppBase.ViewModel"
     Title=""
     Width="800"
     Height="450"
     mc:Ignorable="d">
     <i:Interaction.Triggers>
         <behaviors:EventTrigger EventName="Closed">
-            <behaviors:InvokeCommandAction Command="{Binding Pick15Command}" />
+            <behaviors:InvokeCommandAction Command="{Binding ClosedWindowCommand}" />
         </behaviors:EventTrigger>
     </i:Interaction.Triggers>
     <controls:MetroWindow.Flyouts>
@@ -75,7 +74,15 @@
                         CanClose="False"
                         CanFloat="True"
                         CanHide="False"
-                        ContentId="properties" />
+                        ContentId="properties">
+                        <StackPanel HorizontalAlignment="Left">
+                            <Button
+                                Width="100"
+                                Margin="10,0,0,0"
+                                Command="{Binding TestButtonClickCommand}"
+                                Content="Test" />
+                        </StackPanel>
+                    </avalondock:LayoutAnchorable>
                 </avalondock:LayoutAnchorablePane>
             </avalondock:LayoutPanel>
             <avalondock:LayoutRoot.BottomSide>

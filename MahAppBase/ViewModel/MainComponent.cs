@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows;
+using System.Windows.Input;
 using MahAppBase.Command;
 using Notifications.Wpf;
 
@@ -25,7 +26,6 @@ namespace MahAppBase.ViewModel
                 OnPropertyChanged();
             }
         }
-
         public bool SettingIsOpen
         {
             get
@@ -38,13 +38,26 @@ namespace MahAppBase.ViewModel
                 OnPropertyChanged();
             }
         }
+
         /// <summary>
         /// Donate Button Click Command
         /// </summary>
-        public RelayCommand ButtonDonateClickCommand { get; set; }
-        public RelayCommand ClosedWindowCommand { get; set; }
-        public RelayCommand SettingButtonClickCommand { get; set; }
-
+        public ICommand ButtonDonateClickCommand { get; set; }
+        
+        /// <summary>
+        /// 
+        /// </summary>
+        public ICommand ClosedWindowCommand { get; set; }
+        
+        /// <summary>
+        /// 
+        /// </summary>
+        public ICommand SettingButtonClickCommand { get; set; }
+        
+        /// <summary>
+        /// 
+        /// </summary>
+        public ICommand TestButtonClickCommand { get; set; }
         #endregion
 
         #region MemberFunction
@@ -55,11 +68,18 @@ namespace MahAppBase.ViewModel
                 ButtonDonateClickCommand = new RelayCommand(ButtonDonateClickAction);
                 ClosedWindowCommand = new RelayCommand(ClosedWindowCommandAction);
                 SettingButtonClickCommand = new RelayCommand(SettingButtonClickCommandAction);
+                TestButtonClickCommand = new RelayCommand(TestButtonClickCommandAction);
             }
             catch (Exception ex)
             {
                 Common.Log($"{ex.Message}\r\n{ex.StackTrace}", LogType.Error);
             }
+        }
+
+        private void TestButtonClickCommandAction(object obj)
+        {
+            DemoWindow win = new DemoWindow();
+            win.Show();
         }
 
         private void SettingButtonClickCommandAction(object obj)
@@ -77,12 +97,20 @@ namespace MahAppBase.ViewModel
             ((App)Application.Current).ShowMessage("程式啟動", $"{DateTime.Now.ToString("HH:mm:ss")}程式啟動", NotificationType.Success);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="obj"></param>
         private void ClosedWindowCommandAction(object obj)
         {
             Common.Log("App closed");
             Environment.Exit(0);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="parameter"></param>
         public void ButtonDonateClickAction(object parameter)
         {
             try

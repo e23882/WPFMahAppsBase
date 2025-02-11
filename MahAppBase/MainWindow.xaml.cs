@@ -1,4 +1,5 @@
-﻿using MahAppBase.ViewModel;
+﻿using Autofac;
+using MahAppBase.ViewModel;
 using MahApps.Metro.Controls;
 
 namespace MahAppBase
@@ -12,7 +13,7 @@ namespace MahAppBase
         /// <summary>
         /// ViewModel
         /// </summary>
-        public MainComponent ViewModel { get; set; } = new MainComponent();
+        public MainComponent ViewModel { get; set; } 
         #endregion
 
         #region Function
@@ -22,6 +23,7 @@ namespace MahAppBase
         public MainWindow()
         {
             InitializeComponent();
+            ViewModel = App.Container.Resolve<MainComponent>();
             this.DataContext = ViewModel;
             element.ToggleAutoHide();
             element1.ToggleAutoHide();
