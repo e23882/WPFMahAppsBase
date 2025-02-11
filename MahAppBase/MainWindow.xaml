@@ -75,13 +75,28 @@
                         CanFloat="True"
                         CanHide="False"
                         ContentId="properties">
-                        <StackPanel HorizontalAlignment="Left">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="auto" />
+                                <RowDefinition Height="auto" />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="auto" />
+                                <ColumnDefinition Width="auto" />
+                            </Grid.ColumnDefinitions>
                             <Button
-                                Width="100"
+                                Grid.Row="0"
+                                Grid.Column="0"
                                 Margin="10,0,0,0"
                                 Command="{Binding TestButtonClickCommand}"
-                                Content="Test" />
-                        </StackPanel>
+                                Content="TestInterceptor" />
+                            <Button
+                                Grid.Row="0"
+                                Grid.Column="1"
+                                Margin="10,0,0,0"
+                                Command="{Binding TestInvokeExceptionCommand}"
+                                Content="TestHandleException" />
+                        </Grid>
                     </avalondock:LayoutAnchorable>
                 </avalondock:LayoutAnchorablePane>
             </avalondock:LayoutPanel>

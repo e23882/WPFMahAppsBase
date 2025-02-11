@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Windows;
 using System.Windows.Input;
 using MahAppBase.Command;
 using Notifications.Wpf;
@@ -14,6 +13,9 @@ namespace MahAppBase.ViewModel
         #endregion
 
         #region Property
+        /// <summary>
+        /// 
+        /// </summary>
         public bool DonateIsOpen
         {
             get
@@ -26,6 +28,10 @@ namespace MahAppBase.ViewModel
                 OnPropertyChanged();
             }
         }
+        
+        /// <summary>
+        /// 
+        /// </summary>
         public bool SettingIsOpen
         {
             get
@@ -58,10 +64,18 @@ namespace MahAppBase.ViewModel
         /// 
         /// </summary>
         public ICommand TestButtonClickCommand { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public ICommand TestInvokeExceptionCommand { get; set; }
         #endregion
 
         #region MemberFunction
-        private void InitialCommand()
+        /// <summary>
+        /// 
+        /// </summary>
+        public virtual void InitialCommand()
         {
             try
             {
@@ -69,6 +83,7 @@ namespace MahAppBase.ViewModel
                 ClosedWindowCommand = new RelayCommand(ClosedWindowCommandAction);
                 SettingButtonClickCommand = new RelayCommand(SettingButtonClickCommandAction);
                 TestButtonClickCommand = new RelayCommand(TestButtonClickCommandAction);
+                TestInvokeExceptionCommand = new RelayCommand(TestInvokeExceptionCommandAction);
             }
             catch (Exception ex)
             {
@@ -76,13 +91,34 @@ namespace MahAppBase.ViewModel
             }
         }
 
-        private void TestButtonClickCommandAction(object obj)
+        [HandleException]
+        public virtual void TestInvokeExceptionCommandAction(object obj)
+        {
+            throw new NotImplementedException("故意放在這的例外，程式會自己handle不會crash");
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="obj"></param>
+        public virtual void TestButtonClickCommandAction(object obj)
         {
             DemoWindow win = new DemoWindow();
             win.Show();
+            TestInterceptorWorking();
         }
 
-        private void SettingButtonClickCommandAction(object obj)
+        [HandleException]
+        public virtual void TestInterceptorWorking()
+        {
+            Console.WriteLine("123");
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="obj"></param>
+        public virtual void SettingButtonClickCommandAction(object obj)
         {
             SettingIsOpen = !SettingIsOpen;
         }
@@ -94,7 +130,7 @@ namespace MahAppBase.ViewModel
         {
             Common.Log("App running..");
             InitialCommand();
-            ((App)Application.Current).ShowMessage("程式啟動", $"{DateTime.Now.ToString("HH:mm:ss")}程式啟動", NotificationType.Success);
+            Common.Notify($"{DateTime.Now.ToString("HH:mm:ss")}程式啟動", "程式啟動", NotificationType.Success);
         }
 
         /// <summary>
@@ -111,7 +147,7 @@ namespace MahAppBase.ViewModel
         /// 
         /// </summary>
         /// <param name="parameter"></param>
-        public void ButtonDonateClickAction(object parameter)
+        private void ButtonDonateClickAction(object parameter)
         {
             try
             {

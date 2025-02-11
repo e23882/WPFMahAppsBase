@@ -39,6 +39,12 @@
     <Reference Include="Autofac, Version=8.2.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
       <HintPath>..\packages\Autofac.8.2.0\lib\netstandard2.0\Autofac.dll</HintPath>
     </Reference>
+    <Reference Include="Autofac.Extras.DynamicProxy, Version=7.1.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <HintPath>..\packages\Autofac.Extras.DynamicProxy.7.1.0\lib\netstandard2.0\Autofac.Extras.DynamicProxy.dll</HintPath>
+    </Reference>
+    <Reference Include="Castle.Core, Version=5.0.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+      <HintPath>..\packages\Castle.Core.5.1.1\lib\net462\Castle.Core.dll</HintPath>
+    </Reference>
     <Reference Include="ControlzEx, Version=3.0.2.4, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\ControlzEx.3.0.2.4\lib\net45\ControlzEx.dll</HintPath>
     </Reference>
@@ -119,6 +125,8 @@
     <Compile Include="Command\RelayCommand.cs" />
     <Compile Include="Enum\LogType.cs" />
     <Compile Include="Utility\Common.cs" />
+    <Compile Include="Utility\HandleExceptionAttribute .cs" />
+    <Compile Include="Utility\TryCatchInterceptor.cs" />
     <Compile Include="ViewModel\MainComponent.cs" />
     <Compile Include="ViewModel\ViewModelBase.cs" />
     <Compile Include="View\DemoWindow.xaml.cs">

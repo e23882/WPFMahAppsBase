@@ -11,22 +11,36 @@ namespace MahAppBase
     /// </summary>
     public partial class DemoWindow : Window
     {
+        #region Declarations
+        /// <summary>
+        /// 
+        /// </summary>
         public DemoWindowViewModel ViewModel { get; set; }
+        #endregion
+
+        #region MemberFunction
+        /// <summary>
+        /// 
+        /// </summary>
         public DemoWindow()
         {
             InitializeComponent();
             ViewModel = App.Container.Resolve<DemoWindowViewModel>();
             this.DataContext = ViewModel;
         }
+        #endregion
     }
 
-    public class DemoWindowViewModel : ViewModelBase 
+    public class DemoWindowViewModel : ViewModelBase
     {
         #region Declarations
         private string _Data = "TestWindow1";
         #endregion
 
         #region Properties
+        /// <summary>
+        /// 
+        /// </summary>
         public string Data
         {
             get
@@ -39,6 +53,10 @@ namespace MahAppBase
                 OnPropertyChanged();
             }
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
         public ICommand TestButtonClickCommand { get; set; }
 
         #endregion
