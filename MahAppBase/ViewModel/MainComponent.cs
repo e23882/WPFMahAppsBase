@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Windows;
 using MahAppBase.Command;
+using Notifications.Wpf;
 
 namespace MahAppBase.ViewModel
 {
@@ -40,7 +42,6 @@ namespace MahAppBase.ViewModel
         /// Donate Button Click Command
         /// </summary>
         public RelayCommand ButtonDonateClickCommand { get; set; }
-
         public RelayCommand ClosedWindowCommand { get; set; }
         public RelayCommand SettingButtonClickCommand { get; set; }
 
@@ -71,11 +72,14 @@ namespace MahAppBase.ViewModel
         /// </summary>
         public MainComponent()
         {
+            Common.Log("App running..");
             InitialCommand();
+            ((App)Application.Current).ShowMessage("程式啟動", $"{DateTime.Now.ToString("HH:mm:ss")}程式啟動", NotificationType.Success);
         }
 
         private void ClosedWindowCommandAction(object obj)
         {
+            Common.Log("App closed");
             Environment.Exit(0);
         }
 
