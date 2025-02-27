@@ -21,6 +21,9 @@
             <behaviors:InvokeCommandAction Command="{Binding ClosedWindowCommand}" />
         </behaviors:EventTrigger>
     </i:Interaction.Triggers>
+    <controls:MetroWindow.InputBindings>
+        <KeyBinding Key="F1" Command="{Binding OpenOrCloseSettingCommand}" />
+    </controls:MetroWindow.InputBindings>
     <controls:MetroWindow.Flyouts>
         <controls:FlyoutsControl>
             <controls:Flyout
@@ -108,7 +111,6 @@
             <avalondock:LayoutPanel DockHeight="150">
                 <avalondock:LayoutAnchorablePane>
                     <avalondock:LayoutAnchorable
-                        Title="功能"
                         AutoHideWidth="240"
                         CanAutoHide="False"
                         CanClose="False"
@@ -209,7 +211,7 @@
                                     Grid.Row="0"
                                     Grid.Column="0"
                                     Grid.ColumnSpan="2"
-                                    Margin="0,10,0,0">
+                                    Margin="0,0,0,0">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="8*" />
                                         <ColumnDefinition Width="10" />
@@ -252,7 +254,8 @@
                                     <Button
                                         Grid.Column="2"
                                         Margin="0,0,10,0"
-                                        Content="Reload"
+                                        Command="{Binding FilterCommand}"
+                                        Content="Filter"
                                         IsEnabled="{Binding UnlockingUI}" />
                                 </Grid>
                                 <DataGrid
@@ -311,12 +314,22 @@
                                     dgx:DataGridFilter.StartFilteringKeyGesture="Ctrl+F"
                                     AutoGenerateColumns="False"
                                     IsEnabled="{Binding UnlockingUI}"
-                                    ItemsSource="{Binding DetaiDataList, Mode=OneWay}">
+                                    ItemsSource="{Binding DetailDataList, Mode=OneWay}"
+                                    SelectedItem="{Binding DetailData}">
                                     <DataGrid.Columns>
-                                        <DataGridTextColumn
-                                            Binding="{Binding Item1}"
-                                            Header="Key"
-                                            IsReadOnly="True" />
+                                        <DataGridTextColumn IsReadOnly="True" />
+                                        <DataGridTemplateColumn Header="Key">
+                                            <DataGridTemplateColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <TextBlock Text="{Binding Item1}">
+                                                        <TextBlock.InputBindings>
+                                                            <MouseBinding Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}, Path=DataContext.ChooseItem1StringCommand}" MouseAction="LeftDoubleClick" />
+                                                        </TextBlock.InputBindings>
+                                                    </TextBlock>
+                                                </DataTemplate>
+                                            </DataGridTemplateColumn.CellTemplate>
+                                        </DataGridTemplateColumn>
+
                                         <DataGridTextColumn
                                             Binding="{Binding Item2}"
                                             Header="Value"

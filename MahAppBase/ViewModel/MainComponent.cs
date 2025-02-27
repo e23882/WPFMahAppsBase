@@ -67,25 +67,8 @@ namespace MahAppBase.ViewModel
             {
                 try
                 {
-                    if (BeforeFilterKeyList.Count > KeyList.Count)
-                    {
-                        KeyList.Clear();
-                        KeyList = BeforeFilterKeyList;
-                        KeysCount = KeyList.Count;
-                    }
-
-                    //將完整資料存到集合
-                    BeforeFilterKeyList = DeepCloneObservableCollection(KeyList);
                     _FilterMultiCondition = value;
                     OnPropertyChanged();
-                    Common.Notify("篩選資料...", type: NotificationType.Information);
-                    Task.Run(async () =>
-                    {
-                        UnlockingUI = false;
-                        await DoMultipleFilter(_FilterMultiCondition);
-                        Common.Notify("篩選資料完成", type: NotificationType.Success);
-                        UnlockingUI = true;
-                    });
                 }
                 catch (Exception ex)
                 {
@@ -199,7 +182,22 @@ namespace MahAppBase.ViewModel
             }
         }
         public ObservableCollection<FavoriteConnection> FavoriteConnectionList { get; set; } = new ObservableCollection<FavoriteConnection>();
-        public ObservableCollection<Tuple<string, object>> DetaiDataList { get; set; } = new ObservableCollection<Tuple<string, object>>();
+        public ObservableCollection<Tuple<string, object>> DetailDataList { get; set; } = new ObservableCollection<Tuple<string, object>>();
+
+        private Tuple<string, object> _DetailData;
+        public Tuple<string, object> DetailData 
+        {
+            get 
+            {
+                return _DetailData;
+            }
+            set 
+            {
+                _DetailData = value;
+                OnPropertyChanged();
+            }
+        }
+
         public ObservableCollection<KeyListData> BeforeFilterKeyList { get; set; } = new ObservableCollection<KeyListData>();
         public ObservableCollection<KeyListData> KeyList
         {
@@ -323,6 +321,9 @@ namespace MahAppBase.ViewModel
             }
         }
 
+
+        public ICommand OpenOrCloseSettingCommand { get; set; }
+
         /// <summary>
         /// 
         /// </summary>
@@ -357,6 +358,10 @@ namespace MahAppBase.ViewModel
         /// 
         /// </summary>
         public ICommand ChooseConnectionCommand { get; set; }
+        public ICommand ChooseItem1StringCommand { get; set; }
+
+        public ICommand FilterCommand { get; set; }
+
 
 
         public ConnectionMultiplexer Redis { get; set; }
@@ -379,11 +384,47 @@ namespace MahAppBase.ViewModel
                 TestInvokeExceptionCommand = new RelayCommand(TestInvokeExceptionCommandAction);
                 ConnectCommand = new RelayCommand(ConnectCommandAction);
                 ChooseConnectionCommand = new RelayCommand(ChooseConnectionCommandAction);
+                OpenOrCloseSettingCommand = new RelayCommand(OpenOrCloseSettingCommandAction);
+                ChooseItem1StringCommand = new RelayCommand(ChooseItem1StringCommandAction);
+                FilterCommand = new RelayCommand(FilterCommandAction);
             }
             catch (Exception ex)
             {
                 Common.Log($"{ex.Message}\r\n{ex.StackTrace}", LogType.Error);
             }
+        }
+
+        private void FilterCommandAction(object obj)
+        {
+            if (BeforeFilterKeyList.Count > KeyList.Count)
+            {
+                KeyList.Clear();
+                KeyList = BeforeFilterKeyList;
+                KeysCount = KeyList.Count;
+            }
+
+            //將完整資料存到集合
+            BeforeFilterKeyList = DeepCloneObservableCollection(KeyList);
+
+            Common.Notify("篩選資料...", type: NotificationType.Information);
+            Task.Run(async () =>
+            {
+                UnlockingUI = false;
+                await DoMultipleFilter(_FilterMultiCondition);
+                Common.Notify("篩選資料完成", type: NotificationType.Success);
+                UnlockingUI = true;
+            });
+        }
+
+        private void ChooseItem1StringCommandAction(object obj)
+        {
+            _FilterMultiCondition = $"{DetailData.Item1}={DetailData.Item2}";
+            OnPropertyChanged("FilterMultiCondition");
+        }
+
+        private void OpenOrCloseSettingCommandAction(object obj)
+        {
+            SettingIsOpen = !SettingIsOpen; 
         }
 
         /// <summary>
@@ -454,11 +495,11 @@ namespace MahAppBase.ViewModel
             var redis = ConnectionMultiplexer.Connect($"{Host}:{Port},password={Password}");
             var db = redis.GetDatabase(DBIndex);
             HashEntry[] hashEntries = db.HashGetAll(SelectedKey.Name);
-            DetaiDataList.Clear();
+            DetailDataList.Clear();
 
             foreach (var item in hashEntries)
             {
-                DetaiDataList.Add(new Tuple<string, object>(item.Name.ToString(), item.Value.ToString()));
+                DetailDataList.Add(new Tuple<string, object>(item.Name.ToString(), item.Value.ToString()));
             }
 
             redis.Close();
@@ -540,7 +581,7 @@ namespace MahAppBase.ViewModel
         /// </summary>
         private void InitialConnectionList()
         {
-            
+
         }
 
         /// <summary>
