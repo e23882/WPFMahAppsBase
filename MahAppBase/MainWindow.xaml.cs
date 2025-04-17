@@ -1,5 +1,4 @@
-﻿using Autofac;
-using MahAppBase.ViewModel;
+﻿using MahAppBase.ViewModel;
 using MahApps.Metro.Controls;
 
 namespace MahAppBase
@@ -23,10 +22,8 @@ namespace MahAppBase
         public MainWindow()
         {
             InitializeComponent();
-            ViewModel = App.Container.Resolve<MainComponent>();
+            ViewModel = new MainComponent(tbFormal, tbSIT);
             this.DataContext = ViewModel;
-            element.ToggleAutoHide();
-            element1.ToggleAutoHide();
         }
         #endregion
     }

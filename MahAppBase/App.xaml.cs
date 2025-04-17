@@ -39,10 +39,6 @@ namespace MahAppBase
                 .EnableClassInterceptors()
                 .InterceptedBy(typeof(TryCatchInterceptor))
                 .SingleInstance();
-            builder.RegisterType<DemoWindowViewModel>()
-                .EnableClassInterceptors()
-                .InterceptedBy(typeof(TryCatchInterceptor))
-                .SingleInstance();
             
             Container = builder.Build();
         }

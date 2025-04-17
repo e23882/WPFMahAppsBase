@@ -13,53 +13,14 @@
     Title=""
     Width="800"
     Height="450"
+    AllowsTransparency="True"
+    Opacity="{Binding WindowOpacity}"
     mc:Ignorable="d">
     <i:Interaction.Triggers>
         <behaviors:EventTrigger EventName="Closed">
             <behaviors:InvokeCommandAction Command="{Binding ClosedWindowCommand}" />
         </behaviors:EventTrigger>
     </i:Interaction.Triggers>
-    <controls:MetroWindow.Flyouts>
-        <controls:FlyoutsControl>
-            <controls:Flyout
-                Width="400"
-                Header="Donate"
-                IsOpen="{Binding DonateIsOpen}"
-                Position="Left"
-                Theme="Light">
-                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-                    <Image Width="400" Source="pack://application:,,,/Image/Donate.jpg" />
-                </StackPanel>
-            </controls:Flyout>
-            <controls:Flyout
-                Width="400"
-                Header="Setting"
-                IsOpen="{Binding SettingIsOpen}"
-                Position="Left"
-                Theme="Light">
-                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-                    <TextBlock Text="Put setting component here" />
-                </StackPanel>
-            </controls:Flyout>
-        </controls:FlyoutsControl>
-    </controls:MetroWindow.Flyouts>
-    <controls:MetroWindow.RightWindowCommands>
-        <controls:WindowCommands>
-            <Button Command="{Binding ButtonDonateClickCommand}">
-                <StackPanel Orientation="Horizontal">
-                    <iconPacks:PackIconModern
-                        Width="24"
-                        Height="24"
-                        Kind="Beer" />
-                    <TextBlock
-                        Margin="4,0,0,0"
-                        VerticalAlignment="Center"
-                        Text="Donate Developer" />
-                </StackPanel>
-            </Button>
-            <Button Command="{Binding SettingButtonClickCommand}" Content="Settings" />
-        </controls:WindowCommands>
-    </controls:MetroWindow.RightWindowCommands>
     <avalondock:DockingManager x:Name="mtTab" Grid.Row="0">
         <avalondock:DockingManager.Theme>
             <avalondock:MetroTheme />
@@ -78,56 +39,82 @@
                         <Grid>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="auto" />
-                                <RowDefinition Height="auto" />
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="*" />
                             </Grid.RowDefinitions>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="auto" />
-                                <ColumnDefinition Width="auto" />
-                            </Grid.ColumnDefinitions>
-                            <Button
-                                Grid.Row="0"
-                                Grid.Column="0"
-                                Margin="10,0,0,0"
-                                Command="{Binding TestButtonClickCommand}"
-                                Content="TestInterceptor" />
-                            <Button
-                                Grid.Row="0"
-                                Grid.Column="1"
-                                Margin="10,0,0,0"
-                                Command="{Binding TestInvokeExceptionCommand}"
-                                Content="TestHandleException" />
+                            <Grid Grid.Row="0">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="*" />
+                                </Grid.RowDefinitions>
+                                <StackPanel
+                                    Grid.Row="0"
+                                    Margin="10,10,3,3"
+                                    Orientation="Horizontal">
+                                    <CheckBox IsChecked="{Binding ForceFocus}">搶走電腦Focus</CheckBox>
+                                    <Button
+                                        Margin="10,0,0,0"
+                                        Command="{Binding SendSOSCommand}"
+                                        Content="TestSOS" />
+                                </StackPanel>
+                                <StackPanel
+                                    Grid.Row="1"
+                                    Margin="10,3,3,3"
+                                    Orientation="Horizontal">
+                                    <CheckBox IsChecked="{Binding IgnoreT028}">T028不通知</CheckBox>
+                                </StackPanel>
+                                <StackPanel
+                                    Grid.Row="2"
+                                    Margin="10,3,3,10"
+                                    Orientation="Horizontal">
+                                    <CheckBox IsChecked="{Binding ForceFocus}">IT呼叫不通知</CheckBox>
+                                </StackPanel>
+                                <StackPanel Grid.Row="3" Orientation="Horizontal">
+                                    <TextBlock Text="視窗透明度" />
+                                    <Slider
+                                        Width="200"
+                                        Margin="20,0,0,0"
+                                        Maximum="1"
+                                        Minimum="0.3"
+                                        Value="{Binding WindowOpacity}" />
+                                </StackPanel>
+                            </Grid>
+                            <Grid Grid.Row="1">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="10" />
+                                    <RowDefinition Height="*" />
+                                </Grid.RowDefinitions>
+                                <TextBlock
+                                    Grid.Row="0"
+                                    FontSize="18"
+                                    Text="正式環境收到的訊息" />
+                                <TextBox
+                                    x:Name="tbFormal"
+                                    Grid.Row="2"
+                                    Text="{Binding FormalEnvironmentMessage}" />
+                            </Grid>
+                            <Grid Grid.Row="2">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="10" />
+                                    <RowDefinition Height="*" />
+                                </Grid.RowDefinitions>
+                                <TextBlock
+                                    Grid.Row="0"
+                                    FontSize="18"
+                                    Text="測試環境收到的訊息" />
+                                <TextBox
+                                    x:Name="tbSIT"
+                                    Grid.Row="2"
+                                    Text="{Binding SITEnvironmentMessage}" />
+                            </Grid>
                         </Grid>
                     </avalondock:LayoutAnchorable>
                 </avalondock:LayoutAnchorablePane>
             </avalondock:LayoutPanel>
-            <avalondock:LayoutRoot.BottomSide>
-                <avalondock:LayoutAnchorSide>
-                    <avalondock:LayoutAnchorGroup>
-                        <avalondock:LayoutAnchorable
-                            x:Name="element"
-                            Title="資料"
-                            AutoHideWidth="240"
-                            CanAutoHide="False"
-                            CanClose="False"
-                            CanFloat="True"
-                            CanHide="False"
-                            IsSelected="True">
-                            <DataGrid ItemsSource="{Binding SampleData}" />
-                        </avalondock:LayoutAnchorable>
-                        <avalondock:LayoutAnchorable
-                            x:Name="element1"
-                            Title="資料"
-                            AutoHideWidth="240"
-                            CanAutoHide="False"
-                            CanClose="False"
-                            CanFloat="True"
-                            CanHide="False"
-                            IsSelected="True">
-                            <DataGrid ItemsSource="{Binding SampleData}" />
-                        </avalondock:LayoutAnchorable>
-                    </avalondock:LayoutAnchorGroup>
-                </avalondock:LayoutAnchorSide>
-            </avalondock:LayoutRoot.BottomSide>
         </avalondock:LayoutRoot>
     </avalondock:DockingManager>
 </controls:MetroWindow>
